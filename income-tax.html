@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Income Tax Calculator FY 2026-27 (Old vs New Regime) | CentralStaff.in</title>
+  <meta name="description" content="Compare Old vs New Tax Regime for FY 2026-27 (AY 2027-28) with ₹75,000 standard deduction and ₹12 Lakh rebate for Central Govt employees." />
+  <style>
+    :root { --primary: #1a56db; --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; --muted: #6b7280; --border: #e5e7eb; --success: #059669; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.5; }
+    nav { background: var(--primary); padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    nav a { color: #fff; text-decoration: none; font-size: 14px; font-weight: 500; padding: 6px 10px; border-radius: 6px; }
+    nav a:hover, nav a.active { background: rgba(255,255,255,0.2); }
+    .container { max-width: 780px; margin: 20px auto; padding: 0 14px; }
+    .card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 18px; }
+    h1 { font-size: 22px; color: var(--primary); margin-bottom: 6px; }
+    .subtitle { font-size: 14px; color: var(--muted); margin-bottom: 18px; }
+    .sec-title { font-size: 14px; font-weight: 700; color: var(--primary); margin: 16px 0 10px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 550px) { .grid { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; }
+    label { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+    input { padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; }
+    button { width: 100%; margin-top: 18px; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+    .result-box { display: none; margin-top: 20px; border-top: 2px solid var(--border); padding-top: 16px; }
+    .winner { background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; padding: 14px; border-radius: 10px; text-align: center; font-weight: 700; font-size: 16px; margin-bottom: 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid var(--border); text-align: right; }
+    th:first-child, td:first-child { text-align: left; }
+    th { background: #f9fafb; font-weight: 700; }
+    tr.total-row td { font-weight: 700; font-size: 15px; background: #eff6ff; color: var(--primary); }
+    footer { text-align: center; font-size: 13px; color: var(--muted); margin: 24px 0; }
+  </style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7410293363945514"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+ <script src="menu.js"></script>
+  <div class="container">
+    <div class="card">
+      <h1>Income Tax Calculator (FY 2026-27)</h1>
+      <p class="subtitle">Old vs New Tax Regime compare karein aur check karein kis regime mein aapka zyada tax bachega.</p>
+
+      <div class="sec-title">1. Annual Income Details</div>
+      <div class="grid">
+        <div class="form-group">
+          <label for="gross">Annual Gross Salary (₹)</label>
+          <input type="number" id="gross" value="1450000" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="otherInc">Other Income (Interest etc.) (₹)</label>
+          <input type="number" id="otherInc" value="15000" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="empNps">Govt/Employer NPS u/s 80CCD(2) (₹)</label>
+          <input type="number" id="empNps" value="110000" min="0" />
+        </div>
+      </div>
+
+      <div class="sec-title">2. Deductions (Only for Old Tax Regime)</div>
+      <div class="grid">
+        <div class="form-group">
+          <label for="hra">HRA / LTA Exemption (₹)</label>
+          <input type="number" id="hra" value="120000" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="sec80c">Section 80C (GPF/NPS/PPF/LIC - Max 1.5L)</label>
+          <input type="number" id="sec80c" value="150000" min="0" max="150000" />
+        </div>
+        <div class="form-group">
+          <label for="sec80d">Section 80D (CGHS / Health Insurance)</label>
+          <input type="number" id="sec80d" value="25000" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="nps1b">NPS Self u/s 80CCD(1B) (Max ₹50,000)</label>
+          <input type="number" id="nps1b" value="50000" min="0" max="50000" />
+        </div>
+        <div class="form-group">
+          <label for="homeLoan">Home Loan Interest u/s 24(b) (Max ₹2L)</label>
+          <input type="number" id="homeLoan" value="0" min="0" max="200000" />
+        </div>
+        <div class="form-group">
+          <label for="otherDed">Other Deductions (80TTA/80G etc.)</label>
+          <input type="number" id="otherDed" value="10000" min="0" />
+        </div>
+      </div>
+
+      <button onclick="calculateTax()">Compare Old vs New Regime</button>
+
+      <div class="result-box" id="resultBox">
+        <div class="winner" id="winnerBox">Calculating...</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Particulars</th>
+              <th>New Regime</th>
+              <th>Old Regime</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Gross Total Income</td><td id="gNew">₹0</td><td id="gOld">₹0</td></tr>
+            <tr><td>Standard Deduction</td><td id="stdNew">₹0</td><td id="stdOld">₹0</td></tr>
+            <tr><td>Total Deductions / Exemptions</td><td id="dedNew">₹0</td><td id="dedOld">₹0</td></tr>
+            <tr><td>Net Taxable Income</td><td id="taxableNew">₹0</td><td id="taxableOld">₹0</td></tr>
+            <tr><td>Income Tax (After 87A Rebate)</td><td id="taxNew">₹0</td><td id="taxOld">₹0</td></tr>
+            <tr><td>Health & Education Cess (4%)</td><td id="cessNew">₹0</td><td id="cessOld">₹0</td></tr>
+            <tr class="total-row"><td>Total Tax Payable</td><td id="finalNew">₹0</td><td id="finalOld">₹0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer>© 2026 CentralStaff.in — FY 2026-27 (AY 2027-28) slabs applied.</footer>
+  </div>
+
+  <script>
+    const fmt = n => '₹' + Math.round(n).toLocaleString('en-IN');
+
+    function calcNewTax(income) {
+      let tax = 0;
+      if (income > 2400000) tax += (income - 2400000) * 0.30;
+      if (income > 2000000) tax += (Math.min(income, 2400000) - 2000000) * 0.25;
+      if (income > 1600000) tax += (Math.min(income, 2000000) - 1600000) * 0.20;
+      if (income > 1200000) tax += (Math.min(income, 1600000) - 1200000) * 0.15;
+      if (income > 800000)  tax += (Math.min(income, 1200000) - 800000) * 0.10;
+      if (income > 400000)  tax += (Math.min(income, 800000) - 400000) * 0.05;
+
+      // Section 87A Rebate & Marginal Relief (Limit: ₹12,00,000)
+      if (income <= 1200000) {
+        tax = 0;
+      } else {
+        const excessIncome = income - 1200000;
+        if (tax > excessIncome) tax = excessIncome;
+      }
+      return tax;
+    }
+
+    function calcOldTax(income) {
+      let tax = 0;
+      if (income > 1000000) tax += (income - 1000000) * 0.30;
+      if (income > 500000)  tax += (Math.min(income, 1000000) - 500000) * 0.20;
+      if (income > 250000)  tax += (Math.min(income, 500000) - 250000) * 0.05;
+
+      // Section 87A Rebate (Limit: ₹5,00,000)
+      if (income <= 500000) tax = 0;
+      return tax;
+    }
+
+    function calculateTax() {
+      const gross = parseFloat(document.getElementById('gross').value) || 0;
+      const otherInc = parseFloat(document.getElementById('otherInc').value) || 0;
+      const empNps = parseFloat(document.getElementById('empNps').value) || 0;
+
+      const hra = parseFloat(document.getElementById('hra').value) || 0;
+      const sec80c = Math.min(150000, parseFloat(document.getElementById('sec80c').value) || 0);
+      const sec80d = parseFloat(document.getElementById('sec80d').value) || 0;
+      const nps1b = Math.min(50000, parseFloat(document.getElementById('nps1b').value) || 0);
+      const homeLoan = Math.min(200000, parseFloat(document.getElementById('homeLoan').value) || 0);
+      const otherDed = parseFloat(document.getElementById('otherDed').value) || 0;
+
+      const totalGross = gross + otherInc;
+
+      // New Regime
+      const stdNew = Math.min(75000, gross);
+      const dedNew = empNps;
+      const taxableNew = Math.max(0, totalGross - stdNew - dedNew);
+      const taxNew = calcNewTax(taxableNew);
+      const cessNew = taxNew * 0.04;
+      const finalNew = taxNew + cessNew;
+
+      // Old Regime
+      const stdOld = Math.min(50000, gross);
+      const dedOld = hra + sec80c + sec80d + nps1b + homeLoan + otherDed + empNps;
+      const taxableOld = Math.max(0, totalGross - stdOld - dedOld);
+      const taxOld = calcOldTax(taxableOld);
+      const cessOld = taxOld * 0.04;
+      const finalOld = taxOld + cessOld;
+
+      document.getElementById('gNew').textContent = fmt(totalGross);
+      document.getElementById('gOld').textContent = fmt(totalGross);
+      document.getElementById('stdNew').textContent = fmt(stdNew);
+      document.getElementById('stdOld').textContent = fmt(stdOld);
+      document.getElementById('dedNew').textContent = fmt(dedNew);
+      document.getElementById('dedOld').textContent = fmt(dedOld);
+      document.getElementById('taxableNew').textContent = fmt(taxableNew);
+      document.getElementById('taxableOld').textContent = fmt(taxableOld);
+      document.getElementById('taxNew').textContent = fmt(taxNew);
+      document.getElementById('taxOld').textContent = fmt(taxOld);
+      document.getElementById('cessNew').textContent = fmt(cessNew);
+      document.getElementById('cessOld').textContent = fmt(cessOld);
+      document.getElementById('finalNew').textContent = fmt(finalNew);
+      document.getElementById('finalOld').textContent = fmt(finalOld);
+
+      const diff = Math.abs(finalNew - finalOld);
+      const winnerBox = document.getElementById('winnerBox');
+      if (finalNew < finalOld) {
+        winnerBox.textContent = `New Tax Regime is better! You save ${fmt(diff)}.`;
+      } else if (finalOld < finalNew) {
+        winnerBox.textContent = `Old Tax Regime is better! You save ${fmt(diff)}.`;
+      } else {
+        winnerBox.textContent = `Both regimes have the same tax liability (${fmt(finalNew)}).`;
+      }
+
+      document.getElementById('resultBox').style.display = 'block';
+    }
+    calculateTax();
+  </script>
+</body>
+</html>

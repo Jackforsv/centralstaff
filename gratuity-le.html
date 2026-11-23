@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gratuity & Leave Encashment Calculator | CentralStaff.in</title>
+  <meta name="description" content="Calculate Central Government Retirement Gratuity (up to ₹25 Lakh limit) and Leave Encashment (up to 300 days EL) instantly." />
+  <style>
+    :root { --primary: #1a56db; --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; --muted: #6b7280; --border: #e5e7eb; --success: #059669; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.5; }
+    nav { background: var(--primary); padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    nav a { color: #fff; text-decoration: none; font-size: 14px; font-weight: 500; padding: 6px 10px; border-radius: 6px; }
+    nav a:hover, nav a.active { background: rgba(255,255,255,0.2); }
+    .container { max-width: 720px; margin: 20px auto; padding: 0 14px; }
+    .card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 18px; }
+    h1 { font-size: 22px; color: var(--primary); margin-bottom: 6px; }
+    .subtitle { font-size: 14px; color: var(--muted); margin-bottom: 18px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 550px) { .grid { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; }
+    label { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+    input { padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; }
+    button { width: 100%; margin-top: 16px; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+    .result-box { display: none; margin-top: 20px; border-top: 2px solid var(--border); padding-top: 16px; }
+    .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+    @media (max-width: 550px) { .summary-grid { grid-template-columns: 1fr; } }
+    .stat-card { background: #eff6ff; border: 1px solid #bfdbfe; padding: 14px; border-radius: 10px; text-align: center; }
+    .stat-card.total { background: #ecfdf5; border-color: #a7f3d0; grid-column: 1 / -1; }
+    .stat-card .label { font-size: 13px; color: var(--muted); font-weight: 600; }
+    .stat-card .val { font-size: 24px; font-weight: 700; color: var(--primary); margin-top: 4px; }
+    .stat-card.total .val { color: var(--success); font-size: 28px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    td { padding: 9px 6px; border-bottom: 1px solid var(--border); }
+    td:last-child { text-align: right; font-weight: 600; }
+    .note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+    footer { text-align: center; font-size: 13px; color: var(--muted); margin: 24px 0; }
+  </style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7410293363945514"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+<script src="menu.js"></script>
+  <div class="container">
+    <div class="card">
+      <h1>Gratuity & Leave Encashment Calculator</h1>
+      <p class="subtitle">Central Govt retirement benefits calculate karein (Revised ₹25 Lakh Gratuity limit ke saath).</p>
+
+      <div class="grid">
+        <div class="form-group">
+          <label for="basic">Last Drawn Basic Pay (₹)</label>
+          <input type="number" id="basic" value="78800" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="da">DA Rate at Retirement (%)</label>
+          <input type="number" id="da" value="63" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="years">Qualifying Service (Years)</label>
+          <input type="number" id="years" value="30" min="0" max="45" />
+        </div>
+        <div class="form-group">
+          <label for="months">Additional Months (0–11)</label>
+          <input type="number" id="months" value="4" min="0" max="11" />
+        </div>
+        <div class="form-group">
+          <label for="el">Earned Leave (EL) Balance (Max 300)</label>
+          <input type="number" id="el" value="300" min="0" max="300" />
+        </div>
+      </div>
+
+      <button onclick="calculateRetirement()">Calculate Benefits</button>
+
+      <div class="result-box" id="resultBox">
+        <div class="summary-grid">
+          <div class="stat-card">
+            <div class="label">Retirement Gratuity</div>
+            <div class="val" id="gratuityVal">₹0</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Leave Encashment</div>
+            <div class="val" id="leVal">₹0</div>
+          </div>
+          <div class="stat-card total">
+            <div class="label">Total Tax-Free Retirement Lump Sum</div>
+            <div class="val" id="totalVal">₹0</div>
+          </div>
+        </div>
+
+        <table>
+          <tr><td>Total Emoluments (Basic + DA)</td><td id="emoluments">₹0</td></tr>
+          <tr><td>Completed 6-Monthly Periods (Max 66)</td><td id="periods">0</td></tr>
+          <tr><td>Calculated Gratuity (Before Cap)</td><td id="rawGratuity">₹0</td></tr>
+          <tr><td>Applicable Gratuity Ceiling</td><td id="capLimit">₹25,00,000</td></tr>
+          <tr><td>Encashable EL Days</td><td id="elDays">0 Days</td></tr>
+        </table>
+        <p class="note">*CCS (Pension) Rules ke anusaar 3 mahine ya usse zyada ka fraction ek complete 6-monthly period mana jata hai. Maximum limit 66 periods (33 saal) aur ₹25 Lakh (jab DA ≥ 50% ho) hai.</p>
+      </div>
+    </div>
+    <footer>© 2026 CentralStaff.in — For informational purposes only.</footer>
+  </div>
+
+  <script>
+    const fmt = n => '₹' + Math.round(n).toLocaleString('en-IN');
+
+    function calculateRetirement() {
+      const basic = parseFloat(document.getElementById('basic').value) || 0;
+      const da = parseFloat(document.getElementById('da').value) || 0;
+      const years = parseInt(document.getElementById('years').value) || 0;
+      const months = parseInt(document.getElementById('months').value) || 0;
+      const el = Math.min(300, Math.max(0, parseInt(document.getElementById('el').value) || 0));
+
+      const emoluments = basic + (basic * da / 100);
+      const totalMonths = (years * 12) + months;
+      let sixMonthPeriods = Math.floor(totalMonths / 6) + ((totalMonths % 6) >= 3 ? 1 : 0);
+      sixMonthPeriods = Math.min(66, sixMonthPeriods);
+
+      const cap = da >= 50 ? 2500000 : 2000000;
+      const rawGratuity = emoluments * 0.25 * sixMonthPeriods;
+      const finalGratuity = Math.min(rawGratuity, cap);
+      const leaveEncashment = (emoluments / 30) * el;
+      const total = finalGratuity + leaveEncashment;
+
+      document.getElementById('gratuityVal').textContent = fmt(finalGratuity);
+      document.getElementById('leVal').textContent = fmt(leaveEncashment);
+      document.getElementById('totalVal').textContent = fmt(total);
+      document.getElementById('emoluments').textContent = fmt(emoluments);
+      document.getElementById('periods').textContent = sixMonthPeriods;
+      document.getElementById('rawGratuity').textContent = fmt(rawGratuity);
+      document.getElementById('capLimit').textContent = fmt(cap);
+      document.getElementById('elDays').textContent = el + ' Days';
+      document.getElementById('resultBox').style.display = 'block';
+    }
+    calculateRetirement();
+  </script>
+</body>
+</html>

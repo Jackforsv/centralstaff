@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DA Arrears Calculator - Central Govt Employees | CentralStaff.in</title>
+  <meta name="description" content="Calculate Central Government DA/DR Arrears with TA arrears and NPS/UPS deduction instantly." />
+  <style>
+    :root { --primary: #1a56db; --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; --muted: #6b7280; --border: #e5e7eb; --success: #059669; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.5; }
+    nav { background: var(--primary); padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    nav a { color: #fff; text-decoration: none; font-size: 14px; font-weight: 500; padding: 6px 10px; border-radius: 6px; }
+    nav a:hover, nav a.active { background: rgba(255,255,255,0.2); }
+    .container { max-width: 720px; margin: 20px auto; padding: 0 14px; }
+    .card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 18px; }
+    h1 { font-size: 22px; color: var(--primary); margin-bottom: 6px; }
+    .subtitle { font-size: 14px; color: var(--muted); margin-bottom: 18px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 550px) { .grid { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; }
+    label { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+    input, select { padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; }
+    .checkbox-row { display: flex; align-items: center; gap: 8px; margin-top: 14px; font-size: 14px; }
+    button { width: 100%; margin-top: 16px; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+    button:hover { opacity: 0.95; }
+    .result-box { display: none; margin-top: 20px; border-top: 2px solid var(--border); padding-top: 16px; }
+    .highlight { background: #ecfdf5; border: 1px solid #a7f3d0; padding: 14px; border-radius: 10px; text-align: center; margin-bottom: 14px; }
+    .highlight .label { font-size: 13px; color: #065f46; font-weight: 600; }
+    .highlight .amount { font-size: 28px; font-weight: 700; color: var(--success); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    td { padding: 9px 6px; border-bottom: 1px solid var(--border); }
+    td:last-child { text-align: right; font-weight: 600; }
+    footer { text-align: center; font-size: 13px; color: var(--muted); margin: 24px 0; }
+  </style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7410293363945514"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+ <script src="menu.js"></script>
+  <div class="container">
+    <div class="card">
+      <h1>DA / DR Arrears Calculator</h1>
+      <p class="subtitle">Central Government employees aur pensioners ke liye monthly DA hike aur total arrears calculate karein.</p>
+
+      <div class="grid">
+        <div class="form-group">
+          <label for="basic">Basic Pay / Basic Pension (₹)</label>
+          <input type="number" id="basic" value="44900" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="months">Arrear Months (e.g. Jul–Oct = 4)</label>
+          <input type="number" id="months" value="4" min="1" max="24" />
+        </div>
+        <div class="form-group">
+          <label for="oldDa">Old DA Rate (%)</label>
+          <input type="number" id="oldDa" value="60" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="newDa">New DA Rate (%)</label>
+          <input type="number" id="newDa" value="63" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="ta">Transport Allowance (TA Slab)</label>
+          <select id="ta">
+            <option value="0">Not Applicable / Pensioner (₹0)</option>
+            <option value="900">Level 1-2 Other Cities (₹900)</option>
+            <option value="1350">Level 1-2 TPTA Cities (₹1,350)</option>
+            <option value="1800">Level 3-8 Other Cities (₹1,800)</option>
+            <option value="3600" selected>Level 3-8 TPTA Cities (₹3,600)</option>
+            <option value="7200">Level 9 & Above (₹7,200)</option>
+          </select>
+        </div>
+      </div>
+
+      <label class="checkbox-row">
+        <input type="checkbox" id="npsCheck" checked />
+        Deduct 10% Employee NPS / UPS Contribution on DA Arrears
+      </label>
+
+      <button onclick="calculateDA()">Calculate DA Arrears</button>
+
+      <div class="result-box" id="resultBox">
+        <div class="highlight">
+          <div class="label">Net Payable Arrears (In-Hand)</div>
+          <div class="amount" id="netArrears">₹0</div>
+        </div>
+        <table>
+          <tr><td>DA Rate Hike</td><td id="daDiff">0%</td></tr>
+          <tr><td>Monthly DA Increase</td><td id="monthlyDa">₹0</td></tr>
+          <tr><td>Monthly DA on TA Increase</td><td id="monthlyTaDa">₹0</td></tr>
+          <tr><td>Total Monthly Salary Hike</td><td id="totalMonthly">₹0</td></tr>
+          <tr><td>Gross Arrears (<span id="mCount">0</span> Months)</td><td id="grossArrears">₹0</td></tr>
+          <tr><td>NPS / UPS Deduction (10% of DA Arrear)</td><td id="npsDed">₹0</td></tr>
+        </table>
+      </div>
+    </div>
+    <footer>© 2026 CentralStaff.in — For informational purposes only.</footer>
+  </div>
+
+  <script>
+    const fmt = n => '₹' + Math.round(n).toLocaleString('en-IN');
+
+    function calculateDA() {
+      const basic = parseFloat(document.getElementById('basic').value) || 0;
+      const months = parseFloat(document.getElementById('months').value) || 0;
+      const oldDa = parseFloat(document.getElementById('oldDa').value) || 0;
+      const newDa = parseFloat(document.getElementById('newDa').value) || 0;
+      const ta = parseFloat(document.getElementById('ta').value) || 0;
+      const deductNps = document.getElementById('npsCheck').checked;
+
+      const diff = Math.max(0, newDa - oldDa);
+      const monthlyDa = (basic * diff) / 100;
+      const monthlyTaDa = (ta * diff) / 100;
+      const totalMonthly = monthlyDa + monthlyTaDa;
+      const grossArrears = totalMonthly * months;
+      const npsDed = deductNps ? (monthlyDa * months * 0.10) : 0;
+      const netArrears = grossArrears - npsDed;
+
+      document.getElementById('daDiff').textContent = diff + '%';
+      document.getElementById('monthlyDa').textContent = fmt(monthlyDa);
+      document.getElementById('monthlyTaDa').textContent = fmt(monthlyTaDa);
+      document.getElementById('totalMonthly').textContent = fmt(totalMonthly);
+      document.getElementById('mCount').textContent = months;
+      document.getElementById('grossArrears').textContent = fmt(grossArrears);
+      document.getElementById('npsDed').textContent = '-' + fmt(npsDed);
+      document.getElementById('netArrears').textContent = fmt(netArrears);
+      document.getElementById('resultBox').style.display = 'block';
+    }
+    calculateDA();
+  </script>
+</body>
+</html>
