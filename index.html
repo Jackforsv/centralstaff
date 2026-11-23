@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7th & 8th CPC Central Govt Salary Calculator | Net Pay, HRA, DA & Tax Estimator</title>
+  <meta name="description" content="Calculate Central Government Employee Net Salary under 7th Pay Commission and 8th CPC projections. Check Basic Pay, DA, HRA (30/20/10%), Transport Allowance, NPS, UPS, CGHS, and Income Tax.">
+  <meta name="keywords" content="7th CPC Salary Calculator, 8th Pay Commission Calculator, Central Govt Net Salary Calculator, Pay Matrix Level 1 to 18, HRA Calculator, DA Calculator, UPS vs NPS, LTC rules, Cnetral Govt rules">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7410293363945514"
+     crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; }
+      .print-card { box-shadow: none !important; border: 1px solid #ccc !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
+
+  <!-- Top Navigation Bar -->
+  <header class="bg-blue-900 text-white shadow-md sticky top-0 z-40 no-print">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-2">
+      <div class="flex items-center space-x-2">
+        <span class="bg-amber-400 text-blue-950 font-extrabold px-2.5 py-1 rounded text-sm">CPC</span>
+        <h1 class="text-lg md:text-xl font-bold tracking-tight">CG Employees Salary Portal</h1>
+      </div>
+    <nav class="flex flex-wrap items-center gap-4 text-xs md:text-sm font-medium">
+  <!-- Calculator Dropdown -->
+  <div class="relative group">
+    <button
+      type="button"
+      onclick="document.getElementById('calcSubmenu').classList.toggle('hidden')"
+      class="hover:text-amber-300 transition flex items-center gap-1 focus:outline-none"
+    >
+      Calculators
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+
+    <div
+      id="calcSubmenu"
+      class="hidden group-hover:block absolute left-0 top-full pt-2 w-48 z-50"
+    >
+      <div class="bg-slate-900 border border-slate-700 rounded-lg shadow-xl py-1.5 flex flex-col text-white">
+        <a href="#calculator" class="px-4 py-2 hover:bg-slate-800 hover:text-amber-300 transition">Salary Calculator</a>
+        <a href="da-arrears.html" class="px-4 py-2 hover:bg-slate-800 hover:text-amber-300 transition">DA Arrears</a>
+        <a href="gratuity-le.html" class="px-4 py-2 hover:bg-slate-800 hover:text-amber-300 transition">Gratuity &amp; LE</a>
+        <a href="nps-vs-ups.html" class="px-4 py-2 hover:bg-slate-800 hover:text-amber-300 transition">NPS vs UPS</a>
+        <a href="income-tax.html" class="px-4 py-2 hover:bg-slate-800 hover:text-amber-300 transition">Income Tax</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Separate LTC Rules Menu -->
+  <a href="ltc-rules.html" class="hover:text-amber-300 transition">LTC Rules</a>
+
+  <a href="#8th-cpc" class="hover:text-amber-300 transition">8th CPC</a>
+  <a href="#guide" class="hover:text-amber-300 transition">Salary Rules &amp; Guide</a>
+  <a href="#faq" class="hover:text-amber-300 transition">FAQs</a>
+  <button onclick="openModal('about')" class="hover:text-amber-300 transition">About &amp; Legal</button>
+</nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6">
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Left Column: Inputs -->
+      <div class="lg:col-span-7 bg-white rounded-xl shadow-sm border border-slate-200 p-5 no-print">
+        <div class="border-b border-slate-100 pb-3 mb-4 flex justify-between items-center">
+          <div>
+            <h2 class="text-lg font-bold text-slate-800">7th CPC Salary Parameters</h2>
+            <p class="text-xs text-slate-500">Select your Pay Level, Basic Pay, City Class & Deductions</p>
+          </div>
+          <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-2.5 py-1 rounded-full">Updated Rates</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Pay Level -->
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Pay Matrix Level</label>
+            <select id="payLevel" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"></select>
+          </div>
+
+          <!-- Basic Pay -->
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Basic Pay (₹)</label>
+            <select id="basicPaySelect" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"></select>
+          </div>
+
+          <!-- Custom Basic Pay Option -->
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Or Enter Custom Basic Pay (Optional)</label>
+            <input type="number" id="customBasic" placeholder="Leave blank to use selected matrix cell" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+          </div>
+
+          <!-- DA Percentage -->
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Dearness Allowance (DA %)</label>
+            <input type="number" id="daRate" value="53" min="0" max="200" step="1" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+          </div>
+
+          <!-- HRA City Class -->
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">HRA City Category</label>
+            <select id="hraClass" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+              <option value="X">X Class City (Metro - 30% / 27% / 24%)</option>
+              <option value="Y" selected>Y Class City (Urban - 20% / 18% / 16%)</option>
+              <option value="Z">Z Class City (Other - 10% / 9% / 8%)</option>
+              <option value="NONE">No HRA (Govt Quarter Allotted)</option>
+            </select>
+          </div>
+
+          <!-- Transport Allowance City -->
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Transport Allowance (TPTA) City</label>
+            <select id="tptaCity" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+              <option value="HIGHER">Higher TPTA Cities (19 Major Cities)</option>
+              <option value="OTHER" selected>All Other Places</option>
+              <option value="NONE">No TPTA (Official Vehicle)</option>
+            </select>
+          </div>
+
+          <!-- Divyangjan Double TPTA -->
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">TPTA Category</label>
+            <select id="divyang" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+              <option value="NO" selected>Normal Rate (1x)</option>
+              <option value="YES">Divyangjan (Double TPTA - 2x)</option>
+            </select>
+          </div>
+
+          <!-- Other Allowances -->
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Other Monthly Allowances (₹) <span class="text-slate-400 font-normal">(CEA, Risk, Nursing, Dress, etc.)</span></label>
+            <input type="number" id="otherAllowances" value="0" min="0" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+          </div>
+        </div>
+
+        <hr class="my-5 border-slate-200">
+
+        <h3 class="text-sm font-bold text-slate-800 mb-3">Deductions & Pension Scheme</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Pension Scheme -->
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Pension Scheme</label>
+            <select id="pensionScheme" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+              <option value="NPS" selected>NPS / UPS (10% of Basic + DA)</option>
+              <option value="GPF">OPS / GPF (Custom Monthly Subscription)</option>
+            </select>
+          </div>
+
+          <!-- GPF Custom Box -->
+          <div id="gpfBox" class="hidden">
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Monthly GPF Subscription (₹)</label>
+            <input type="number" id="gpfAmount" value="5000" min="500" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+          </div>
+
+          <!-- CGHS -->
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">CGHS Contribution</label>
+            <select id="cghsOpt" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+              <option value="AUTO" selected>Auto by Pay Level (₹250 - ₹1000)</option>
+              <option value="NONE">Not Under CGHS (₹0)</option>
+            </select>
+          </div>
+
+          <!-- CGEGIS -->
+          <div>
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">CGEGIS Insurance</label>
+            <select id="cgegisOpt" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+              <option value="AUTO" selected>Auto by Group (₹30 / ₹60 / ₹120)</option>
+              <option value="0">None (₹0)</option>
+            </select>
+          </div>
+
+          <!-- Professional Tax / License Fee / Other Deductions -->
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Other Deductions (₹) <span class="text-slate-400 font-normal">(Prof. Tax, Quarter License Fee, Society Loan)</span></label>
+            <input type="number" id="otherDeductions" value="0" min="0" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Salary Slip Output -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 print-card">
+          <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-lg p-4 mb-4">
+            <div class="flex justify-between items-center">
+              <span class="text-xs uppercase tracking-wider text-blue-200 font-semibold">Take-Home Net Salary</span>
+              <span id="badgeLevel" class="bg-blue-700 text-xs px-2 py-0.5 rounded font-medium">Level 7</span>
+            </div>
+            <div id="netSalaryDisplay" class="text-3xl font-extrabold mt-1">₹0</div>
+            <div class="flex justify-between text-xs text-blue-200 mt-2 pt-2 border-t border-blue-800">
+              <span>Gross: <strong id="grossMini" class="text-white">₹0</strong></span>
+              <span>Deductions: <strong id="deductMini" class="text-white">₹0</strong></span>
+            </div>
+          </div>
+
+          <!-- Earnings Breakdown -->
+          <div class="mb-4">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-700 mb-2">Monthly Earnings (Gross)</h4>
+            <div class="space-y-1.5 text-sm">
+              <div class="flex justify-between"><span class="text-slate-600">Basic Pay</span><span id="outBasic" class="font-semibold">₹0</span></div>
+              <div class="flex justify-between"><span class="text-slate-600">Dearness Allowance (<span id="outDaPct">53</span>%)</span><span id="outDA" class="font-semibold">₹0</span></div>
+              <div class="flex justify-between"><span class="text-slate-600">House Rent Allowance (<span id="outHraPct">20</span>%)</span><span id="outHRA" class="font-semibold">₹0</span></div>
+              <div class="flex justify-between"><span class="text-slate-600">Transport Allowance (TPTA + DA)</span><span id="outTPTA" class="font-semibold">₹0</span></div>
+              <div class="flex justify-between"><span class="text-slate-600">Other Allowances</span><span id="outOtherAllow" class="font-semibold">₹0</span></div>
+              <div class="flex justify-between pt-2 border-t border-slate-200 font-bold text-emerald-800">
+                <span>Total Gross Salary</span><span id="outGross">₹0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deductions Breakdown -->
+          <div class="mb-4">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-rose-700 mb-2">Monthly Deductions</h4>
+            <div class="space-y-1.5 text-sm">
+              <div class="flex justify-between"><span id="outPensionLabel" class="text-slate-600">NPS / UPS Tier-I (10%)</span><span id="outPension" class="font-semibold">₹0</span></div>
+              <div class="flex justify-between"><span class="text-slate-600">CGHS Contribution</span><span id="outCGHS" class="font-semibold">₹0</span></div>
+              <div class="flex justify-between"><span class="text-slate-600">CGEGIS Insurance</span><span id="outCGEGIS" class="font-semibold">₹0</span></div>
+              <div class="flex justify-between"><span class="text-slate-600">Est. Monthly Income Tax (New Regime)</span><span id="outTax" class="font-semibold">₹0</span></div>
+              <div class="flex justify-between"><span class="text-slate-600">Other Deductions</span><span id="outOtherDed" class="font-semibold">₹0</span></div>
+              <div class="flex justify-between pt-2 border-t border-slate-200 font-bold text-rose-800">
+                <span>Total Deductions</span><span id="outTotalDed">₹0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Govt Employer Contribution Info -->
+          <div class="bg-slate-50 rounded-lg p-3 text-xs text-slate-600 mb-4 border border-slate-200">
+            <div class="flex justify-between">
+              <span>Govt. Pension Contribution (14% / 18.5%):</span>
+              <strong id="outGovtNps" class="text-slate-800">₹0/month</strong>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="grid grid-cols-2 gap-3 no-print">
+            <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold py-2.5 px-4 rounded-lg transition">
+              Print / Save PDF Slip
+            </button>
+            <button onclick="shareWhatsApp()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2.5 px-4 rounded-lg transition">
+              Share on WhatsApp
+            </button>
+          </div>
+        </div>
+
+        <!-- Affiliate / Sponsored Callout Box (Monetization #2) -->
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 no-print">
+          <span class="text-[10px] font-bold uppercase tracking-wider bg-amber-200 text-amber-900 px-2 py-0.5 rounded">Employee Benefits & Tax Tools</span>
+          <h3 class="text-sm font-bold text-slate-800 mt-2">Save Tax & File ITR for Govt Employees</h3>
+          <p class="text-xs text-slate-600 mt-1">Claim Form-16 deductions, check Home Loan interest benefits, or compare Top Zero-Fee Credit Cards for Central Govt Employees.</p>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <!-- Replace # with your affiliate links from Cuelinks / EarnKaro / ClearTax -->
+            <a href="#affiliate-itr" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">File ITR in 5 Mins →</a>
+            <a href="#affiliate-loan" class="bg-white border border-amber-300 hover:bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1.5 rounded-lg transition">Govt Staff SBI/HDFC Offers</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8th Pay Commission Estimator Card -->
+    <section id="8th-cpc" class="mt-8 bg-white rounded-xl shadow-sm border border-indigo-200 p-5 no-print">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Future Salary Projection</span>
+          <h2 class="text-lg font-bold text-slate-800">8th Pay Commission (8th CPC) Salary Estimator</h2>
+          <p class="text-xs text-slate-500">Check projected revised Basic Pay & Gross Salary based on expected Fitment Factors (DA resets to 0% on implementation).</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="text-xs font-semibold text-slate-700">Fitment Factor:</label>
+          <select id="fitmentFactor" class="rounded-lg border border-indigo-300 bg-indigo-50 px-3 py-2 text-sm font-bold text-indigo-900 focus:outline-none">
+            <option value="1.92">1.92x (Conservative)</option>
+            <option value="2.08">2.08x (Moderate)</option>
+            <option value="2.28">2.28x (Expected)</option>
+            <option value="2.57" selected>2.57x (7th CPC Equivalent)</option>
+            <option value="2.86">2.86x (JCM Staff Side Demand)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+        <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200">
+          <span class="text-xs text-slate-500">Projected 8th CPC Basic Pay</span>
+          <div id="cpc8Basic" class="text-xl font-extrabold text-indigo-900 mt-1">₹0</div>
+        </div>
+        <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200">
+          <span class="text-xs text-slate-500">Revised HRA (24% / 16% / 8% at 0% DA)</span>
+          <div id="cpc8Hra" class="text-xl font-extrabold text-indigo-900 mt-1">₹0</div>
+        </div>
+        <div class="bg-indigo-50 p-3.5 rounded-lg border border-indigo-200">
+          <span class="text-xs text-indigo-700 font-semibold">Estimated 8th CPC Gross Salary</span>
+          <div id="cpc8Gross" class="text-xl font-extrabold text-indigo-950 mt-1">₹0</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEO Content & Complete Guide (Required for Google AdSense Approval & Ranking) -->
+    <article id="guide" class="mt-8 bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-6 no-print">
+      <h2 class="text-2xl font-bold text-slate-900 border-b pb-3">Complete Guide to Central Government Employee Salary Calculation (7th & 8th CPC)</h2>
+      
+      <p class="text-sm text-slate-700">
+        Understanding the monthly salary structure of Central Government employees requires familiarity with the <strong>7th Central Pay Commission (7th CPC) Pay Matrix</strong>, Dearness Allowance (DA) revisions, House Rent Allowance (HRA) slabs, Transport Allowance (TPTA), and statutory deductions such as the National Pension System (NPS), Unified Pension Scheme (UPS), and Central Government Health Scheme (CGHS). Our interactive calculator automates these exact formulas to give you an accurate in-hand salary breakdown.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <h3 class="text-base font-bold text-slate-800 mb-2">1. How 7th CPC Pay Matrix Works</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            The 7th Pay Commission replaced the old Grade Pay system with a unified <strong>Pay Matrix consisting of 18 Levels</strong>. Level 1 starts at a minimum Basic Pay of ₹18,000 (Group C/MTS), while Level 18 goes up to ₹2,50,000 (Cabinet Secretary). Every year, employees receive a 3% annual increment by moving one cell down in their respective Pay Level column.
+          </p>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <h3 class="text-base font-bold text-slate-800 mb-2">2. HRA Revision Rules (X, Y, and Z Cities)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            House Rent Allowance is calculated on Basic Pay depending on the city classification:
+            <br>• <strong>When DA crossed 25%:</strong> HRA revised to 27% (X), 18% (Y), and 9% (Z).
+            <br>• <strong>When DA crossed 50%:</strong> HRA automatically revised to <strong>30% for X Class (Metro)</strong>, <strong>20% for Y Class</strong>, and <strong>10% for Z Class cities</strong>, subject to minimum floor rates of ₹5,400, ₹3,600, and ₹1,800 respectively.
+          </p>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-bold text-slate-800">3. Transport Allowance (TPTA) Calculation Formula</h3>
+      <p class="text-sm text-slate-700">
+        Transport Allowance is granted to cover daily commuting expenses and depends on both the employee's Pay Level and posting city (Higher TPTA Cities vs. Other Places). Importantly, <strong>DA is also paid on Transport Allowance</strong>.
+      </p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs border border-slate-200">
+          <thead class="bg-slate-100 text-slate-700">
+            <tr>
+              <th class="border p-2.5">Pay Matrix Level</th>
+              <th class="border p-2.5">Higher TPTA Cities (Base)</th>
+              <th class="border p-2.5">Other Cities (Base)</th>
+              <th class="border p-2.5">Total TPTA Formula</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border p-2.5 font-medium">Level 1 & Level 2 (Basic &lt; ₹24,200)</td>
+              <td class="border p-2.5">₹1,350</td>
+              <td class="border p-2.5">₹900</td>
+              <td class="border p-2.5">Base TPTA + (Base TPTA × DA%)</td>
+            </tr>
+            <tr>
+              <td class="border p-2.5 font-medium">Level 3 to Level 8</td>
+              <td class="border p-2.5">₹3,600</td>
+              <td class="border p-2.5">₹1,800</td>
+              <td class="border p-2.5">Base TPTA + (Base TPTA × DA%)</td>
+            </tr>
+            <tr>
+              <td class="border p-2.5 font-medium">Level 9 and Above</td>
+              <td class="border p-2.5">₹7,200</td>
+              <td class="border p-2.5">₹3,600</td>
+              <td class="border p-2.5">Base TPTA + (Base TPTA × DA%)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="text-lg font-bold text-slate-80">4. Mandatory Salary Deductions (NPS, UPS, CGHS & CGEGIS)</h3>
+      <ul class="list-disc pl-5 text-sm text-slate-700 space-y-1.5">
+        <li><strong>NPS & Unified Pension Scheme (UPS):</strong> Employees contribute <strong>10% of (Basic Pay + DA)</strong> every month. Under NPS, the Central Government contributes 14%, whereas under the Unified Pension Scheme (UPS), the government contribution is 18.5% to guarantee 50% assured pension after 25 years of qualifying service.</li>
+        <li><strong>CGHS Subscription:</strong> Monthly contribution ranges from ₹250 (Levels 1–5), ₹450 (Level 6), ₹650 (Levels 7–11), to ₹1,000 (Level 12 and above).</li>
+        <li><strong>CGEGIS (Group Insurance):</strong> Deducted at ₹30 for Group C, ₹60 for Group B, and ₹120 for Group A officers.</li>
+      </ul>
+
+      <!-- FAQ Section -->
+      <div id="faq" class="pt-4 border-t border-slate-200">
+        <h3 class="text-xl font-bold text-slate-900 mb-4">Frequently Asked Questions (FAQs)</h3>
+        <div class="space-y-4">
+          <div>
+            <h4 class="text-sm font-bold text-slate-800">Q1. How is Net In-Hand Salary calculated for Central Govt Employees?</h4>
+            <p class="text-xs text-slate-600 mt-1">Net Salary = Gross Salary (Basic Pay + DA + HRA + Total TPTA + Other Allowances) minus Total Deductions (NPS/UPS/GPF + CGHS + CGEGIS + Income Tax + License Fee).</p>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-800">Q2. Does HRA increase automatically when DA reaches 50%?</h4>
+            <p class="text-xs text-slate-600 mt-1">Yes, as per DoPT and Ministry of Finance norms, once Dearness Allowance touches 50%, HRA rates stand revised to 30% for X class cities, 20% for Y class cities, and 10% for Z class cities.</p>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-800">Q3. How is the 8th Pay Commission salary estimated?</h4>
+            <p class="text-xs text-slate-600 mt-1">When a new Pay Commission is implemented, existing DA is merged into the Basic Pay and reset to 0%, and the current Basic Pay is multiplied by a Fitment Factor (commonly projected between 1.92 and 2.86).</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Footer with Mandatory AdSense Pages (Privacy Policy, Disclaimer, Terms, Contact) -->
+  <footer class="bg-slate-900 text-slate-400 text-xs mt-12 py-8 no-print">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div>
+        <p class="font-bold text-white text-sm">CG Employees Salary Calculator Portal</p>
+        <p class="mt-1">Independent informational utility for Central Government Staff & Pensioners.</p>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <button onclick="openModal('about')" class="hover:text-white underline">About Us</button>
+        <button onclick="openModal('privacy')" class="hover:text-white underline">Privacy Policy</button>
+        <button onclick="openModal('disclaimer')" class="hover:text-white underline">Disclaimer</button>
+        <button onclick="openModal('contact')" class="hover:text-white underline">Contact Us</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Legal & Compliance Modal (For AdSense Approval) -->
+  <div id="legalModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50 no-print">
+    <div class="bg-white rounded-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-6 shadow-xl">
+      <div class="flex justify-between items-center border-b pb-3 mb-4">
+        <h3 id="modalTitle" class="text-lg font-bold text-slate-900">Legal Information</h3>
+        <button onclick="closeModal()" class="text-slate-500 hover:text-slate-800 text-xl font-bold">&times;</button>
+      </div>
+      <div id="modalContent" class="text-xs text-slate-700 space-y-3 leading-relaxed"></div>
+    </div>
+  </div>
+
+  <script>
+    const baseStarts = {
+      "1": 18000, "2": 19900, "3": 21700, "4": 25500, "5": 29200,
+      "6": 35400, "7": 44900, "8": 47600, "9": 53100, "10": 56100,
+      "11": 67700, "12": 78800, "13": 123100, "13A": 131100, "14": 144200,
+      "15": 182200, "16": 205400, "17": 225000, "18": 250000
+    };
+
+    const levelLabels = {
+      "1": "Level 1 (GP ₹1800)", "2": "Level 2 (GP ₹1900)", "3": "Level 3 (GP ₹2000)",
+      "4": "Level 4 (GP ₹2400)", "5": "Level 5 (GP ₹2800)", "6": "Level 6 (GP ₹4200)",
+      "7": "Level 7 (GP ₹4600)", "8": "Level 8 (GP ₹4800)", "9": "Level 9 (GP ₹5400)",
+      "10": "Level 10 (GP ₹5400 Group A)", "11": "Level 11 (GP ₹6600)", "12": "Level 12 (GP ₹7600)",
+      "13": "Level 13 (GP ₹8700)", "13A": "Level 13A (GP ₹8900)", "14": "Level 14 (GP ₹10000)",
+      "15": "Level 15 (HAG)", "16": "Level 16 (HAG+)", "17": "Level 17 (Apex)", "18": "Level 18 (Cabinet Secy)"
+    };
+
+    function generateCells(startPay, level) {
+      if (level === "17" || level === "18") return [startPay];
+      const cells = [startPay];
+      let current = startPay;
+      const maxSteps = level >= 15 ? 8 : 40;
+      for (let i = 1; i < maxSteps; i++) {
+        current = Math.round((current * 1.03) / 100) * 100;
+        if (current > 250000) break;
+        cells.push(current);
+      }
+      return cells;
+    }
+
+    const payLevelEl = document.getElementById('payLevel');
+    const basicPaySelectEl = document.getElementById('basicPaySelect');
+
+    Object.keys(baseStarts).forEach(lvl => {
+      const opt = document.createElement('option');
+      opt.value = lvl;
+      opt.textContent = levelLabels[lvl];
+      if (lvl === "7") opt.selected = true;
+      payLevelEl.appendChild(opt);
+    });
+
+    function populateBasicCells() {
+      const lvl = payLevelEl.value;
+      const cells = generateCells(baseStarts[lvl], lvl);
+      basicPaySelectEl.innerHTML = '';
+      cells.forEach((amt, idx) => {
+        const opt = document.createElement('option');
+        opt.value = amt;
+        opt.textContent = `Cell ${idx + 1} — ₹${amt.toLocaleString('en-IN')}`;
+        basicPaySelectEl.appendChild(opt);
+      });
+      calculateAll();
+    }
+
+    function fmt(num) {
+      return '₹' + Math.round(num).toLocaleString('en-IN');
+    }
+
+    function calculateAll() {
+      const lvl = payLevelEl.value;
+      const customBasic = parseFloat(document.getElementById('customBasic').value);
+      const basic = (!isNaN(customBasic) && customBasic > 0) ? customBasic : parseFloat(basicPaySelectEl.value);
+      const daRate = parseFloat(document.getElementById('daRate').value) || 0;
+      const hraClass = document.getElementById('hraClass').value;
+      const tptaCity = document.getElementById('tptaCity').value;
+      const divyang = document.getElementById('divyang').value === 'YES' ? 2 : 1;
+      const otherAllow = parseFloat(document.getElementById('otherAllowances').value) || 0;
+      const pensionScheme = document.getElementById('pensionScheme').value;
+      const otherDed = parseFloat(document.getElementById('otherDeductions').value) || 0;
+
+      document.getElementById('gpfBox').classList.toggle('hidden', pensionScheme !== 'GPF');
+
+      const daAmt = Math.round(basic * (daRate / 100));
+
+      let hraPct = 0;
+      let minHra = 0;
+      if (hraClass !== 'NONE') {
+        if (daRate >= 50) {
+          hraPct = hraClass === 'X' ? 30 : (hraClass === 'Y' ? 20 : 10);
+        } else if (daRate >= 25) {
+          hraPct = hraClass === 'X' ? 27 : (hraClass === 'Y' ? 18 : 9);
+        } else {
+          hraPct = hraClass === 'X' ? 24 : (hraClass === 'Y' ? 16 : 8);
+        }
+        minHra = hraClass === 'X' ? 5400 : (hraClass === 'Y' ? 3600 : 1800);
+      }
+      const hraAmt = hraClass === 'NONE' ? 0 : Math.max(Math.round(basic * (hraPct / 100)), minHra);
+
+      let baseTpta = 0;
+      const numLvl = parseInt(lvl) || 13;
+      if (tptaCity !== 'NONE') {
+        if (numLvl <= 2 && basic < 24200) {
+          baseTpta = tptaCity === 'HIGHER' ? 1350 : 900;
+        } else if (numLvl <= 8) {
+          baseTpta = tptaCity === 'HIGHER' ? 3600 : 1800;
+        } else {
+          baseTpta = tptaCity === 'HIGHER' ? 7200 : 3600;
+        }
+      }
+      baseTpta = baseTpta * divyang;
+      const totalTpta = Math.round(baseTpta + (baseTpta * (daRate / 100)));
+
+      const gross = basic + daAmt + hraAmt + totalTpta + otherAllow;
+
+      let pensionDed = 0;
+      let govtNps = 0;
+      if (pensionScheme === 'NPS') {
+        pensionDed = Math.round((basic + daAmt) * 0.10);
+        govtNps = Math.round((basic + daAmt) * 0.14);
+        document.getElementById('outPensionLabel').textContent = 'NPS / UPS Tier-I (10%)';
+      } else {
+        pensionDed = parseFloat(document.getElementById('gpfAmount').value) || 0;
+        govtNps = 0;
+        document.getElementById('outPensionLabel').textContent = 'GPF Subscription';
+      }
+
+      let cghs = 0;
+      if (document.getElementById('cghsOpt').value === 'AUTO') {
+        if (numLvl <= 5) cghs = 250;
+        else if (numLvl === 6) cghs = 450;
+        else if (numLvl <= 11) cghs = 650;
+        else cghs = 1000;
+      }
+
+      let cgegis = 0;
+      if (document.getElementById('cgegisOpt').value === 'AUTO') {
+        if (numLvl <= 5) cgegis = 30;
+        else if (numLvl <= 9) cgegis = 60;
+        else cgegis = 120;
+      }
+
+      const annualGross = gross * 12;
+      const taxableIncome = Math.max(0, annualGross - 75000);
+      let annualTax = 0;
+      if (taxableIncome > 1200000) {
+        const slabs = [
+          [400000, 0.05], [400000, 0.10], [400000, 0.15],
+          [400000, 0.20], [400000, 0.25], [Infinity, 0.30]
+        ];
+        let rem = taxableIncome - 400000;
+        for (const [limit, rate] of slabs) {
+          if (rem <= 0) break;
+          const chunk = Math.min(rem, limit);
+          annualTax += chunk * rate;
+          rem -= chunk;
+        }
+        annualTax = annualTax * 1.04;
+      }
+      const monthlyTax = Math.round(annualTax / 12);
+
+      const totalDed = pensionDed + cghs + cgegis + monthlyTax + otherDed;
+      const netSalary = gross - totalDed;
+
+      document.getElementById('badgeLevel').textContent = `Level ${lvl}`;
+      document.getElementById('netSalaryDisplay').textContent = fmt(netSalary);
+      document.getElementById('grossMini').textContent = fmt(gross);
+      document.getElementById('deductMini').textContent = fmt(totalDed);
+
+      document.getElementById('outBasic').textContent = fmt(basic);
+      document.getElementById('outDaPct').textContent = daRate;
+      document.getElementById('outDA').textContent = fmt(daAmt);
+      document.getElementById('outHraPct').textContent = hraPct;
+      document.getElementById('outHRA').textContent = fmt(hraAmt);
+      document.getElementById('outTPTA').textContent = fmt(totalTpta);
+      document.getElementById('outOtherAllow').textContent = fmt(otherAllow);
+      document.getElementById('outGross').textContent = fmt(gross);
+
+      document.getElementById('outPension').textContent = fmt(pensionDed);
+      document.getElementById('outCGHS').textContent = fmt(cghs);
+      document.getElementById('outCGEGIS').textContent = fmt(cgegis);
+      document.getElementById('outTax').textContent = fmt(monthlyTax);
+      document.getElementById('outOtherDed').textContent = fmt(otherDed);
+      document.getElementById('outTotalDed').textContent = fmt(totalDed);
+      document.getElementById('outGovtNps').textContent = fmt(govtNps) + '/month';
+
+      const fitment = parseFloat(document.getElementById('fitmentFactor').value) || 2.57;
+      const cpc8Basic = Math.round((basic * fitment) / 100) * 100;
+      const cpc8HraPct = hraClass === 'NONE' ? 0 : (hraClass === 'X' ? 24 : (hraClass === 'Y' ? 16 : 8));
+      const cpc8Hra = Math.round(cpc8Basic * (cpc8HraPct / 100));
+      const cpc8Gross = cpc8Basic + cpc8Hra + baseTpta + otherAllow;
+
+      document.getElementById('cpc8Basic').textContent = fmt(cpc8Basic);
+      document.getElementById('cpc8Hra').textContent = fmt(cpc8Hra);
+      document.getElementById('cpc8Gross').textContent = fmt(cpc8Gross);
+    }
+
+    function shareWhatsApp() {
+      const net = document.getElementById('netSalaryDisplay').textContent;
+      const gross = document.getElementById('outGross').textContent;
+      const lvl = payLevelEl.value;
+      const text = `*Central Govt Salary Estimate (Level ${lvl})*%0A• Gross Salary: ${gross}%0A• Net In-Hand: ${net}%0ACheck your 7th & 8th CPC Salary here: ${window.location.href}`;
+      window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
+
+    const legalPages = {
+      about: {
+        title: "About Us",
+        body: `<p>Welcome to <strong>CG Employees Salary Calculator Portal</strong>. We provide accurate, free-to-use financial and salary calculation tools tailored for Central Government employees, pensioners, and job aspirants across India.</p><p>Our calculator covers all 18 Pay Matrix Levels of the 7th Central Pay Commission along with projected fitment calculations for the 8th Pay Commission.</p>`
+      },
+      privacy: {
+        title: "Privacy Policy",
+        body: `<p><strong>1. Data Privacy:</strong> All salary calculations on this website happen 100% locally inside your web browser. We do not store, collect, or transmit your Basic Pay, salary figures, or personal details to any server.</p><p><strong>2. Cookies & Third-Party Ads:</strong> We may use third-party advertising companies such as Google AdSense to serve ads when you visit our website. Google uses cookies (including the DoubleClick cookie) to serve ads based on a user's prior visits to this or other websites.</p><p><strong>3. Opt-Out:</strong> Users may opt out of personalized advertising by visiting Google Ads Settings.</p>`
+      },
+      disclaimer: {
+        title: "Disclaimer",
+        body: `<p>This website is an independent informational tool and is <strong>not affiliated with the Government of India, Ministry of Finance, or DoPT</strong>. While every effort is made to keep Pay Matrix cells, DA, HRA, TPTA, and tax calculations accurate as per official circulars, employees should always verify exact figures with their respective DDO / Pay & Accounts Office (PAO) payslip.</p>`
+      },
+      contact: {
+        title: "Contact Us",
+        body: `<p>For feedback, corrections, or business inquiries regarding our Central Government Employee tools, please reach out to us at:</p><p><strong>Email:</strong> atul9716504431@gmail.com</p>`
+      }
+    };
+
+    function openModal(type) {
+      const data = legalPages[type];
+      document.getElementById('modalTitle').textContent = data.title;
+      document.getElementById('modalContent').innerHTML = data.body;
+      const modal = document.getElementById('legalModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('legalModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    payLevelEl.addEventListener('change', populateBasicCells);
+    ['basicPaySelect', 'customBasic', 'daRate', 'hraClass', 'tptaCity', 'divyang', 'otherAllowances', 'pensionScheme', 'gpfAmount', 'cghsOpt', 'cgegisOpt', 'otherDeductions', 'fitmentFactor'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calculateAll);
+      document.getElementById(id).addEventListener('change', calculateAll);
+    });
+
+    populateBasicCells();
+  </script>
+</body>
+</html>
